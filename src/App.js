@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-
+import Radium , {StyleRoot} from 'radium';
 
 
 class App extends Component {
@@ -47,11 +47,15 @@ class App extends Component {
   }
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'ariel',
       border: '1px solid blue',
-      padding: '5px'
-
+      padding: '5px',
+      ':hover':{
+        backgroundColor : 'lightgreen',
+        color : 'black'
+      }
     };
     let personShow = null;
     if (this.state.showPersons) {
@@ -68,9 +72,15 @@ class App extends Component {
 
         </div>
       );
+      style.backgroundColor ='red';
+      style [':hover'] = {
+        backgroundColor : 'white',
+        color :  'black'
+      }
     }
 
     return (
+      <StyleRoot>
       <div className="App">
         <h1>Hii i am react </h1>
         <button
@@ -78,8 +88,9 @@ class App extends Component {
           onClick={this.togglePersonhandler}>Toggle Button</button>
         {personShow}
       </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
