@@ -14,17 +14,15 @@ class App extends Component {
     showPersons :false
 
   }
-  switchNameHandler = (myName) => {
-  //  console.log('there you go button');
-    this.setState({
-      persons: [
-        { name: myName, age: 23 },
-        { name: "aman", age: 22 },
-        { name: "geela", age: 23 }
-      ]
-       
-    })
+ 
+  deletePersonHandler =(personIndex) =>{
+   // const persons =this.state.persons.slice();
+   const persons = [...this.state.persons];
+    persons.splice(personIndex,1);
+    this.setState({persons :persons});
+
   }
+
  togglePersonhandler=  ()=>{
     const doesShowPerson = this.state.showPersons;
     this.setState({showPersons : !doesShowPerson});
@@ -53,18 +51,13 @@ class App extends Component {
     if(this.state.showPersons){
       personShow = (
         <div>
-         <Person name={this.state.persons[0].name}
-                gender={this.state.persons[0].gender}
-                 age={this.state.persons[0].age} />  
-         <Person 
-               name={this.state.persons[1].name} 
-               age={this.state.persons[1].age} 
-               gender={this.state.persons[1].gender}
-               change ={this.nameChangedHandler} />
-         <Person 
-              name={this.state.persons[2].name} 
-              gender={this.state.persons[2].gender}
-              age={this.state.persons[2].age} />
+          {this.state.persons.map((person,index)=>{
+            return <Person 
+            click ={() => this.deletePersonHandler(index)}
+            name = {person.name}
+            age = {person.age} />
+          })}
+        
         </div>
       );
     } 
@@ -74,7 +67,7 @@ class App extends Component {
         <h1>Hii i am react </h1>
         <button 
                style = {style}
-               onClick={()=> this.togglePersonhandler()}>Switch name</button>
+               onClick={this.togglePersonhandler}>Toggle Button</button>
         {personShow}
       </div>
     );
